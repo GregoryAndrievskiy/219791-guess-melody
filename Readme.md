@@ -1,7 +1,7 @@
 # Личный проект «Угадай мелодию» [![Build status][travis-image]][travis-url]
 
 * Студент: [Григорий Андриевский](https://up.htmlacademy.ru/ecmascript/2/user/219791).
-* Наставник: `Неизвестно`.
+* Наставник: [Евгений Воронин](https://htmlacademy.ru/profile/id245996).
 
 ---
 
