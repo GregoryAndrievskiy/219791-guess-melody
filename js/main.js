@@ -1,14 +1,14 @@
-'use strict';
 window.main = function () {
-  const app = document.querySelector('.app');
-  const sectionMain = app.querySelector('.main');
-  const templates = document.querySelector('#templates').content;
-  const templatesMainArray = templates.querySelectorAll('.main');
+  const app = document.querySelector(`.app`);
+  const sectionMain = app.querySelector(`.main`);
+  const templates = document.querySelector(`#templates`).content;
+  const templatesMainArray = templates.querySelectorAll(`.main`);
   const screenArray = [];
-  screenArray.push(templatesMainArray[4],templatesMainArray[3],templatesMainArray[0],templatesMainArray[1],templatesMainArray[2]);
-  console.log(screenArray);
+
+  screenArray.push(templatesMainArray[4], templatesMainArray[3], templatesMainArray[0], templatesMainArray[1], templatesMainArray[2]);
+
   const screenRender = function (screenNumber) {
-    sectionMain.innerHTML = '';
+    sectionMain.innerHTML = ``;
     sectionMain.appendChild(screenArray[screenNumber]);
   };
   const startScreen = 0;
@@ -32,12 +32,12 @@ window.main = function () {
     screenRender(currentScreen);
     return currentScreen;
   };
-  document.addEventListener('keydown', function (evt) {
+  document.addEventListener(`keydown`, function (evt) {
     if (evt.keyCode === 39 && evt.altKey) {
       nextScreenRender();
     }
   });
-  document.addEventListener('keydown', function (evt) {
+  document.addEventListener(`keydown`, function (evt) {
     if (evt.keyCode === 37 && evt.altKey) {
       prevScreenRender();
     }
