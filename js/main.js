@@ -4,9 +4,7 @@ window.main = function () {
   const templates = document.querySelector(`#templates`).content;
   const templatesMainArray = templates.querySelectorAll(`.main`);
   const screenArray = [];
-
   screenArray.push(templatesMainArray[4], templatesMainArray[3], templatesMainArray[0], templatesMainArray[1], templatesMainArray[2]);
-
   const screenRender = function (screenNumber) {
     sectionMain.innerHTML = ``;
     sectionMain.appendChild(screenArray[screenNumber]);
