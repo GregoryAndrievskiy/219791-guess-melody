@@ -24,14 +24,16 @@
     currentScreen++;
     if (currentScreen >= screenArray.length) {
       currentScreen = 0;
-    } screenRender(currentScreen);
+    }
+    screenRender(currentScreen);
     return currentScreen;
   };
   const prevScreenRender = function () {
     currentScreen--;
     if (currentScreen < 0) {
       currentScreen = screenArray.length - 1;
-    } screenRender(currentScreen);
+    }
+    screenRender(currentScreen);
     return currentScreen;
   };
   document.addEventListener(`keydown`, (evt) => {
