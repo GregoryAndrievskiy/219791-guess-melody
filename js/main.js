@@ -1,2 +1,2 @@
-import renderWelcome from './screenWelcome';
+import renderWelcome from './renderWelcome';
 renderWelcome();

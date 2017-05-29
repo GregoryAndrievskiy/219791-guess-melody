@@ -1,3 +1,7 @@
+import elementCreator from './elementCreator';
+import render from './render';
+import renderWelcome from './renderWelcome';
+
 const winStat = {
   title: `Вы настоящий меломан!`,
   stat: `За&nbsp;2&nbsp;минуты<br>вы&nbsp;отгадали 4&nbsp;мелодии`,
@@ -13,15 +17,14 @@ const winScreen = `
   </section>
 `;
 
-import elementCreator from './createDOM';
 const win = elementCreator(winScreen);
-import render from './render';
-import renderWelcome from './screenWelcome';
+
 function renderWin() {
   render(win);
-  let replay = document.querySelector(`.main-replay`);
+  const replay = document.querySelector(`.main-replay`);
   replay.addEventListener(`click`, function () {
     renderWelcome();
   });
 }
+
 export default renderWin;

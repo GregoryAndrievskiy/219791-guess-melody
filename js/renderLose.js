@@ -1,3 +1,7 @@
+import elementCreator from './elementCreator';
+import render from './render';
+import renderWelcome from './renderWelcome';
+
 const loseStat = {
   title: `Вы проиграли`,
   stat: `Ничего, вам повезет в следующий раз`,
@@ -11,15 +15,14 @@ const loseScreen = `
   </section>
 `;
 
-import elementCreator from './createDOM';
 const lose = elementCreator(loseScreen);
-import render from './render';
-import renderWelcome from './screenWelcome';
+
 function renderLose() {
   render(lose);
-  let replay = document.querySelector(`.main-replay`);
+  const replay = document.querySelector(`.main-replay`);
   replay.addEventListener(`click`, function () {
     renderWelcome();
   });
 }
+
 export default renderLose;

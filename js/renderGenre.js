@@ -1,3 +1,8 @@
+import elementCreator from './elementCreator';
+import render from './render';
+import renderWin from './renderWin';
+import renderLose from './renderLose';
+
 const genreStat = {
   title: `Выберите инди-рок треки`,
   value: `answer-1`,
@@ -35,17 +40,12 @@ const genreScreen = `
   </section>
 `;
 
-import elementCreator from './createDOM';
-import render from './render';
-import renderWin from './screenWin';
-import renderLose from './screenLose';
-
 const genre = elementCreator(genreScreen);
 
 function renderGenre() {
   render(genre);
-  let input = document.getElementsByTagName(`input`);
-  let send = document.querySelector(`.genre-answer-send`);
+  const input = document.getElementsByTagName(`input`);
+  const send = document.querySelector(`.genre-answer-send`);
   send.disabled = true;
   for (let i = 0; i < input.length; i++) {
     input[i].addEventListener(`change`, function () {

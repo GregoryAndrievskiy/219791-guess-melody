@@ -1,3 +1,7 @@
+import elementCreator from './elementCreator';
+import render from './render';
+import renderArtist from './renderArtist';
+
 const welcomeStat = {
   start: `Начать игру`,
   rules: `Правила игры`,
@@ -15,15 +19,14 @@ const welcomeScreen = `
   </section>
 `;
 
-import elementCreator from './createDOM';
-import render from './render';
-import renderArtist from './screenArtist';
 const welcome = elementCreator(welcomeScreen);
+
 function renderWelcome() {
   render(welcome);
-  let play = document.querySelector(`.main-play`);
+  const play = document.querySelector(`.main-play`);
   play.addEventListener(`click`, function () {
     renderArtist();
   });
 }
+
 export default renderWelcome;

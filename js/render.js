@@ -1,7 +1,7 @@
 function render(domElement) {
-  let app = document.querySelector(`.app`);
-  let main = app.querySelector(`.main`);
-  main.innerHTML = domElement;
+  const main = document.querySelector(`.app .main`);
+  main.innerHTML = ``;
+  main.appendChild(domElement);
 }
 
 export default render;

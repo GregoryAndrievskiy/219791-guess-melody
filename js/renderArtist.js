@@ -1,3 +1,7 @@
+import elementCreator from './elementCreator';
+import render from './render';
+import renderGenre from './renderGenre';
+
 const artistStat = {
   title: `Кто исполняет эту песню?`,
   first: `Пелагея`,
@@ -54,17 +58,15 @@ const artistScreen = `
   </section>
 `;
 
-import elementCreator from './createDOM';
-import render from './render';
-import renderGenre from './screenGenre';
 const artist = elementCreator(artistScreen);
 function renderArtist() {
   render(artist);
-  let answer = document.querySelectorAll(`.main-answer`);
+  const answer = document.querySelectorAll(`.main-answer`);
   answer.forEach(function (item) {
     item.addEventListener(`click`, function () {
       renderGenre();
     });
   });
 }
+
 export default renderArtist;
