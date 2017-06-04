@@ -104,7 +104,7 @@ gulp.task('assemble', ['clean'], function () {
 gulp.task('build', ['assemble', 'imagemin']);
 
 gulp.task('scripts', function () {
-  return gulp.src('js/main.js')
+  return gulp.src(['js/main.js', 'js/player.js', 'js/animate.js', 'js/time-format.js', 'js/timer.js'])
     .pipe(plumber())
     .pipe(sourcemaps.init())
     .pipe(rollup({}, 'iife'))

@@ -11,7 +11,7 @@ const syncState = (player, element) => {
 
 const switchState = (state, player, element) => {
   if (player.paused) {
-    player.play();
+   player.play();
     state.stopAnimation = window.animation.animate(
         window.animation.getAnimation(player.currentTime, 1000, player.duration),
         (animation) => updateState(element, player));
