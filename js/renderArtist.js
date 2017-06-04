@@ -18,7 +18,7 @@ let dataTrans = (data) => {
   let mixArtist = [];
   let indexBank = [0, 1, 2, 3];
   const randOrd = () => {
-    return (Math.round(Math.random())-0.5);
+    return (Math.round(Math.random()) - 0.5);
   };
   const gameBank = indexBank.sort(randOrd).splice(0, gameRules.artistsNumber);
 
@@ -71,7 +71,6 @@ export default {
     const answer = document.querySelectorAll(`.app .main .main-answer`);
     const playerWrapper = document.querySelector(`.player-wrapper`);
     let rnd = getRnd(0, bank.url.length - 1);
-    console.log(rnd);
     window.initializePlayer(playerWrapper, bank.url[rnd]);
     answer.forEach((item) => {
       item.onclick = (evt) => {

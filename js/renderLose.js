@@ -19,4 +19,4 @@ export default () => {
   replay.onclick = () => {
     renderWelcome();
   };
-}
+};

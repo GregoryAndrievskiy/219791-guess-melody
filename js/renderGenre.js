@@ -23,7 +23,7 @@ let dataTrans = (data) => {
   }
 
   const randOrd = () => {
-    return (Math.round(Math.random())-0.5);
+    return (Math.round(Math.random()) - 0.5);
   };
 
   const gameBank = indexBank.sort(randOrd).splice(0, gameRules.genreNumber);

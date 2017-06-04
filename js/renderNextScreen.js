@@ -1,4 +1,4 @@
-import currentState from './currentState'
+import currentState from './currentState';
 import renderGenre from './renderGenre';
 import renderArtist from './renderArtist';
 import renderWin from './renderWin';
@@ -15,4 +15,4 @@ export default () => {
       renderArtist.render();
     }
   }
-}
+};

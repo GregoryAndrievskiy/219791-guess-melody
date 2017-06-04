@@ -24,4 +24,4 @@ export default () => {
   play.onclick = () => {
     renderNextScreen();
   };
-}
+};
