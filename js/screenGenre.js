@@ -1,9 +1,9 @@
 import elementCreator from './elementCreator';
 import questionGenre from './questionGenre';
 
-const genreTemplate = (data, bank) => `
+const genreTemplate = (data) => `
   <section class="main main--level main--level-genre">
-    <h2 class="title">Выберите ${bank.genre[bank.rndGenre]} треки</h2>
+    <h2 class="title">Выберите ${data.genre[data.rnd]} треки</h2>
     <form class="genre">
       ${data.url.reduce((previousValue, currentItem, index) => {
         return previousValue + questionGenre(index);
@@ -13,4 +13,4 @@ const genreTemplate = (data, bank) => `
   </section>
 `;
 
-export default (data, bank) => elementCreator(genreTemplate(data, bank));
+export default (data) => elementCreator(genreTemplate(data));

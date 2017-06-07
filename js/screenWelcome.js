@@ -6,9 +6,7 @@ const welcomeTemplate = (data) =>`
     <button class="main-play">Начать игру</button>
     <h2 class="title main-title">Правила игры</h2>
     <p class="text main-text">
-      Правила просты&nbsp;— за&nbsp;${data.time} минуты дать
-      максимальное количество правильных ответов.<br>
-      Удачи!
+      ${data.rules}
     </p>
   </section>
 `;

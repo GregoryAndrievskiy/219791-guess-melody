@@ -6,42 +6,16 @@ import gameRules from './gameRules';
 import currentState from './currentState';
 import screenGenre from './screenGenre';
 
-let bank = {};
-
-let dataTrans = (data) => {
-  let mixUrl = [];
-  let mixGenre = [];
-  const indexBank = [];
-  let rnd = get.rnd(0, gameRules.genreNumber - 1);
-  for (let i = 0; i < data.genre.length; i++) {
-    indexBank.push(i);
-  }
-
-  const gameBank = indexBank.sort(get.randOrd).splice(0, gameRules.genreNumber);
-
-  gameBank.forEach((i) => {
-    mixGenre.push(data.genre[i]);
-    mixUrl.push(data.url[i]);
-  });
-
-  bank = {
-    genre: mixGenre,
-    url: mixUrl,
-    rndGenre: rnd
-  };
-
-  return bank;
-};
-
 export default {
   render: () => {
-    render(screenGenre(dataTrans(gameData), bank));
+    const mixedData = get.dataTrans(gameData, gameRules.genreNumber);
+    render(screenGenre(mixedData));
     const input = document.getElementsByName(`answer`);
     const send = document.querySelector(`.genre-answer-send`);
     const playerWrapper = document.querySelectorAll(`.player-wrapper`);
     const chkBoxes = Array.from(document.getElementsByName(`answer`));
     playerWrapper.forEach(function (element, index) {
-      window.initializePlayer(element, bank.url[index]);
+      window.initializePlayer(element, mixedData.url[index]);
     });
     send.disabled = true;
     input.forEach((item) => {
@@ -64,7 +38,7 @@ export default {
           checkedCBs.push(item.value);
         }
       });
-      if (checkedCBs.every((element) => (bank.genre[element] === bank.genre[bank.rndGenre]))) {
+      if (checkedCBs.every((element) => (mixedData.genre[element] === mixedData.genre[mixedData.rnd]))) {
         currentState.rightAnswerCount++;
       }
       renderNextScreen();
