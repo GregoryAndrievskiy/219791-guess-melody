@@ -1,13 +1,13 @@
 import render from './render';
 import renderWelcome from './renderWelcome';
-import win from './win';
+import currentState from './currentState';
+import screenResult from './screenResult';
+import screenWin from './screenWin';
 
-function renderWin() {
-  render(win);
+export default () => {
+  render(screenResult(screenWin(currentState)));
   const replay = document.querySelector(`.main-replay`);
-  replay.addEventListener(`click`, function () {
+  replay.onclick = () => {
     renderWelcome();
-  });
-}
-
-export default renderWin;
+  };
+};

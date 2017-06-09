@@ -1,13 +1,12 @@
 import render from './render';
 import renderWelcome from './renderWelcome';
-import lose from './lose';
+import screenLose from './screenLose';
+import screenResult from './screenResult';
 
-function renderLose() {
-  render(lose);
+export default () => {
+  render(screenResult(screenLose));
   const replay = document.querySelector(`.main-replay`);
-  replay.addEventListener(`click`, function () {
+  replay.onclick = () => {
     renderWelcome();
-  });
-}
-
-export default renderLose;
+  };
+};

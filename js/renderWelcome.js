@@ -1,13 +1,14 @@
 import render from './render';
-import renderArtist from './renderArtist';
-import welcome from './welcome';
+import renderNextScreen from './renderNextScreen';
+import gameRules from './gameRules';
+import screenWelcome from './screenWelcome';
+import currentState from './currentState';
 
-function renderWelcome() {
-  render(welcome);
+export default () => {
+  render(screenWelcome(gameRules));
   const play = document.querySelector(`.main-play`);
-  play.addEventListener(`click`, function () {
-    renderArtist();
-  });
-}
-
-export default renderWelcome;
+  play.onclick = () => {
+    renderNextScreen();
+  };
+  currentState.rightAnswerCount = 0;
+};
