@@ -1,14 +1,14 @@
-const rnd = (min, max) => {
+export const rnd = (min, max) => {
   let rand = min + Math.random() * (max + 1 - min);
   rand = Math.floor(rand);
   return rand;
 };
 
-const randOrd = () => {
+export const randOrd = () => {
   return (Math.round(Math.random()) - 0.5);
 };
 
-const dataTrans = (data, gameType) => {
+export const dataTrans = (data, gameType) => {
   let mixUrl = [];
   let mixArtist = [];
   let mixGenre = [];
@@ -32,10 +32,4 @@ const dataTrans = (data, gameType) => {
     genre: mixGenre,
     rnd: rand
   };
-};
-
-export default {
-  rnd,
-  randOrd,
-  dataTrans
 };

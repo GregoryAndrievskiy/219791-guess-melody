@@ -1,4 +1,4 @@
-import get from './get';
+import {dataTrans} from './get';
 import render from './render';
 import renderNextScreen from './renderNextScreen';
 import gameData from './gameData';
@@ -8,7 +8,7 @@ import screenGenre from './screenGenre';
 
 export default {
   render: () => {
-    const mixedData = get.dataTrans(gameData, gameRules.genreNumber);
+    const mixedData = dataTrans(gameData, gameRules.genreNumber);
     render(screenGenre(mixedData));
     const input = document.getElementsByName(`answer`);
     const send = document.querySelector(`.genre-answer-send`);

@@ -1,8 +1,10 @@
 import elementCreator from './elementCreator';
 import questionGenre from './questionGenre';
+import screenTimer from './screenTimer';
 
 const genreTemplate = (data) => `
   <section class="main main--level main--level-genre">
+    ${screenTimer}
     <h2 class="title">Выберите ${data.genre[data.rnd]} треки</h2>
     <form class="genre">
       ${data.url.reduce((previousValue, currentItem, index) => {
@@ -10,6 +12,7 @@ const genreTemplate = (data) => `
       }, ``)}
       <button class="genre-answer-send" type="submit">Ответить</button>
     </form>
+    </div>
   </section>
 `;
 
