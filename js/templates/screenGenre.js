@@ -1,4 +1,4 @@
-import elementCreator from './elementCreator';
+import elementCreator from '../functions/elementCreator';
 import questionGenre from './questionGenre';
 import screenTimer from './screenTimer';
 

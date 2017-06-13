@@ -1,5 +1,5 @@
-import elementCreator from './elementCreator';
-import gameRules from './gameRules';
+import elementCreator from '../functions/elementCreator';
+import gameRules from '../gameRules';
 
 const resultTemplate = (data) => `
   <section class="main main--result">

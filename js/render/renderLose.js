@@ -1,7 +1,7 @@
-import render from './render';
+import render from '../functions/render';
 import renderWelcome from './renderWelcome';
-import screenLose from './screenLose';
-import screenResult from './screenResult';
+import screenLose from '../templates/screenLose';
+import screenResult from '../templates/screenResult';
 
 export default () => {
   render(screenResult(screenLose));

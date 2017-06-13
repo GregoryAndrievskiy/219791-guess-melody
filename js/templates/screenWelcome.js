@@ -1,4 +1,4 @@
-import elementCreator from './elementCreator';
+import elementCreator from '../functions/elementCreator';
 
 const welcomeTemplate = (data) =>`
   <section class="main main--welcome">

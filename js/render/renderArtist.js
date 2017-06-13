@@ -1,9 +1,9 @@
-import {rnd, dataTrans} from './get';
-import screenArtist from './screenArtist';
-import render from './render';
-import gameData from './gameData';
-import gameRules from './gameRules';
-import currentState from './currentState';
+import {rnd, dataTrans} from '../functions/get';
+import screenArtist from '../templates/screenArtist';
+import render from '../functions/render';
+import gameData from '../gameData';
+import gameRules from '../gameRules';
+import currentState from '../currentState';
 import renderNextScreen from './renderNextScreen';
 
 export default {
@@ -18,10 +18,13 @@ export default {
       item.onclick = (evt) => {
         if (evt.target.value === `val-${rand}`) {
           currentState.rightAnswerCount++;
+        } else {
+          currentState.livesLeft--;
         }
         renderNextScreen();
       };
     });
   },
-  answerCount: currentState.rightAnswerCount
+  answerCount: currentState.rightAnswerCount,
+  livesLeft: currentState.livesLeft
 };
