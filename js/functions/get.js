@@ -30,11 +30,11 @@ export const dataTrans = (data, gameType) => {
     artist: mixArtist,
     url: mixUrl,
     genre: mixGenre,
-    rnd: rand
+    rightAnswer: rand
   };
 };
 
-export const checkedCBsValue = (checkboxes) => {
+export const getCheckedValue = (checkboxes) => {
   const values = [];
   checkboxes.forEach((item) => {
     if (item.checked) {
@@ -44,10 +44,10 @@ export const checkedCBsValue = (checkboxes) => {
   return values;
 };
 
-export const rightCBsValue = (checkboxes, data) => {
+export const getRightValue = (checkboxes, data) => {
   const values = [];
   checkboxes.forEach((item) => {
-    if (data.genre[item.value] === data.genre[data.rnd]) {
+    if (data.genre[item.value] === data.genre[data.rightAnswer]) {
       values.push(item.value);
     }
   });
@@ -55,16 +55,18 @@ export const rightCBsValue = (checkboxes, data) => {
 };
 
 export const checkCBs = (checkboxes, data) => {
-  return (checkedCBsValue(checkboxes).every((element) => (data.genre[element] === data.genre[data.rnd])) && (rightCBsValue(checkboxes, data).length === checkedCBsValue(checkboxes).length));
+  const checkForAllRightAnswers = (getRightValue(checkboxes, data).length === getCheckedValue(checkboxes).length);
+  const checkedValues = getCheckedValue(checkboxes);
+  const rightAnswer = data.genre[data.rightAnswer];
+  return checkedValues.every((element) => data.genre[element] === rightAnswer) && checkForAllRightAnswers;
 };
 
-export const validateForm = (submitButton, checkboxes) => {
-  const input = document.getElementsByName(`answer`);
+export const validateForm = (inputs, submitButton, checkboxes) => {
   submitButton.disabled = true;
-  input.forEach((item) => {
+  inputs.forEach((item) => {
     item.checked = false;
   });
-  input.forEach((item) => {
+  inputs.forEach((item) => {
     item.onclick = () => {
       if (checkboxes.every((element) => !element.checked)) {
         submitButton.disabled = true;

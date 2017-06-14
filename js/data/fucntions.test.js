@@ -4,7 +4,7 @@ import {checkCBs} from '../functions/get';
 const data = Object.freeze(
     {
       genre: [`Хип-хоп и рэп`, `Классические`, `Кантри и фолк`, `Поп`, `Классические`, `Кантри и фолк`],
-      rnd: `4`
+      rightAnswer: `4`
     }
 );
 

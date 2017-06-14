@@ -8,7 +8,8 @@ export default () => {
   currentState.answerCount--;
   if (currentState.answerCount < 0 || currentState.livesLeft === 0) {
     renderWin(renderArtist.rightAnswerCount);
+    clearTimeout(currentState.timer);
   } else {
-    randomizer(renderGenre.render, renderGenre.render);
+    randomizer(renderArtist.render, renderGenre.render);
   }
 };

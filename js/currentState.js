@@ -4,5 +4,6 @@ export default {
   livesLeft: 3,
   time: 1000,
   timeLeft: 111,
-  statistic: 77
+  statistic: 77,
+  timer: ``
 };

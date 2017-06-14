@@ -8,8 +8,13 @@ import renderNextScreen from './renderNextScreen';
 
 export default {
   render: () => {
+    const mainWrap = document.querySelector(`.main-wrap`);
     const mixedData = dataTrans(gameData, gameRules.artistsNumber);
-    render(screenArtist(mixedData));
+    render(mainWrap, screenArtist(mixedData));
+    let score = 2;
+    const timer = setTimeout(function () {
+      score = score / 2;
+    }, gameRules.doubleScoreTime);
     const answer = document.querySelectorAll(`.app .main .main-answer-r`);
     const playerWrapper = document.querySelector(`.player-wrapper`);
     let rand = rnd(0, mixedData.url.length - 1);
@@ -17,10 +22,11 @@ export default {
     answer.forEach((item) => {
       item.onclick = (evt) => {
         if (evt.target.value === `val-${rand}`) {
-          currentState.rightAnswerCount++;
+          currentState.rightAnswerCount = currentState.rightAnswerCount + score;
         } else {
           currentState.livesLeft--;
         }
+        clearTimeout(timer);
         renderNextScreen();
       };
     });

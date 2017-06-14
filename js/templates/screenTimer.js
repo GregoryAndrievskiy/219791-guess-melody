@@ -8,6 +8,4 @@ export default `
       </div>
     </svg>
     <div class="main-wrap">
-      <div class="main-timer"></div>
-      <div class="main-timer"></div>
 `;
