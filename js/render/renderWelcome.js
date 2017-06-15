@@ -12,10 +12,10 @@ export default () => {
   const play = document.querySelector(`.main-play`);
   play.onclick = () => {
     renderGameScreen();
-    renderNextScreen();
     const timeout = () => setTimeout(renderLose, gameRules.gameTime);
+    currentState.startTime = new Date().getTime();
     currentState.timer = timeout();
-    window.initializeCountdown(gameRules.gameTime / 1000);
+    renderNextScreen();
   };
   currentState.rightAnswerCount = 0;
   currentState.answerCount = gameRules.gamesNumber;
