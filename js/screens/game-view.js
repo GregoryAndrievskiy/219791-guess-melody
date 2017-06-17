@@ -1,6 +1,8 @@
-import elementCreator from '../functions/elementCreator';
+import AbstractView from '../AbstractView';
 
-const gameScreen = `
+export default class gameView extends AbstractView {
+  get template() {
+    return `
   <section class="main main--level">
     <svg xmlns="http://www.w3.org/2000/svg" class="timer" viewBox="0 0 780 780">
       <circle cx="390" cy="390" r="370" class="timer-line" style="filter: url(.#blur); transform: rotate(-90deg) scaleY(-1); transform-origin: center"></circle>
@@ -11,6 +13,9 @@ const gameScreen = `
       </div>
     </svg>
     <div class="main-wrap"></div>
-  </section>`;
-
-export default elementCreator(gameScreen);
+  </section>
+    `;
+  }
+  startTimer() {
+  }
+}
