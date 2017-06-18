@@ -2,7 +2,7 @@ class AbstractView {
   get template() {
   }
   render() {
-    return createElement(this.template);
+    return this.create(this.template);
   }
   bind() {
   }
@@ -13,8 +13,9 @@ class AbstractView {
     }
     return this._element;
   }
+  create(template) {
+    return new DOMParser().parseFromString(template, `text/html`).body.firstChild;
+  }
 }
-const createElement = (template) => {
-  return new DOMParser().parseFromString(template, `text/html`).body.firstChild;
-};
+
 export default AbstractView;

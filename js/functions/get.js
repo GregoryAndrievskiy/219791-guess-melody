@@ -133,8 +133,3 @@ export const calculateStatistic = (currentData, statisticData) => {
   const betterThen = playersNumber - currentPlace;
   currentData.statistic = Math.round(betterThen / playersNumber * 100);
 };
-
-export const lose = (data, callback) => {
-  data.status = `lose`;
-  callback();
-};

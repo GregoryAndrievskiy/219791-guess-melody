@@ -1,6 +1,6 @@
 import AbstractView from '../AbstractView';
 
-export default class gameView extends AbstractView {
+export default class GameView extends AbstractView {
   get template() {
     return `
   <section class="main main--level">

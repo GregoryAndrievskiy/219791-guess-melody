@@ -4,7 +4,7 @@ import currentState from '../currentState';
 import statistic from '../statistic';
 import {calculateStatistic} from '../functions/get';
 
-export default class resultView extends AbstractView {
+export default class ResultView extends AbstractView {
   get template() {
     let resultTitle;
     let resultStat;
