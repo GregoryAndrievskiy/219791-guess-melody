@@ -85,13 +85,20 @@ export const randomizer = (callbackOne, callbackTwo) => {
   }
 };
 
-export const renderZeroSecond = (data) => {
+export const renderInitialState = (state, data) => {
   const addLeadingZero = (val) => val < 10 ? `0${val}` : val;
   const timer = document.querySelector(`.timer-value`);
   const initialTime = window.formatTime(data.gameTime, 0);
   timer.querySelector(`.timer-value-mins`).textContent = addLeadingZero(initialTime.minutes);
   timer.querySelector(`.timer-value-secs`).textContent = addLeadingZero(initialTime.seconds);
   document.querySelector(`.timer-line`).setAttributeNS(null, `stroke-dashoffset`, `0`);
+  document.querySelector(`.timer-value`).classList.remove(`timer-value--finished`);
+  const countDown = () => window.initializeCountdown(data.gameTime / 1000);
+  state.countDown = countDown();
+  state.rightAnswerCount = 0;
+  state.answerCount = data.gamesNumber;
+  state.livesLeft = data.lives;
+  state.status = ``;
 };
 
 export const getPassedTime = (data) => {
@@ -132,4 +139,7 @@ export const calculateStatistic = (currentData, statisticData) => {
   const playersNumber = currentStatistic.length;
   const betterThen = playersNumber - currentPlace;
   currentData.statistic = Math.round(betterThen / playersNumber * 100);
+  if (currentPlace === 1) {
+    currentData.status = `record`;
+  }
 };

@@ -1,7 +1,7 @@
 import currentState from '../currentState';
 import artist from '../screens/artist';
 import genre from '../screens/genre';
-import result from '../screens/result';
+import Application from '../Application';
 import {randomizer, getPassedTime} from './get';
 
 export default () => {
@@ -9,7 +9,7 @@ export default () => {
   if (currentState.answerCount < 0 || currentState.livesLeft === 0) {
     currentState.result.answers = currentState.rightAnswerCount;
     currentState.result.time = getPassedTime(currentState.startTime);
-    result();
+    Application.showStats();
     clearTimeout(currentState.timer);
   } else {
     randomizer(genre, artist);

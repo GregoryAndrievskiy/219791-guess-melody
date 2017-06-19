@@ -13,8 +13,8 @@ class AbstractView {
     }
     return this._element;
   }
-  create(template) {
-    return new DOMParser().parseFromString(template, `text/html`).body.firstChild;
+  create() {
+    return new DOMParser().parseFromString(this.template, `text/html`).body.firstChild;
   }
 }
 
