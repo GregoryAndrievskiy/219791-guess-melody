@@ -77,7 +77,7 @@ export const validateForm = (inputs, submitButton, checkboxes) => {
   });
 };
 
-export const randomizer = (callbackOne, callbackTwo) => {
+export const randomQuestion = (callbackOne, callbackTwo) => {
   if (Math.random() >= 0.5) {
     callbackOne();
   } else {
@@ -93,8 +93,7 @@ export const renderInitialState = (state, data) => {
   timer.querySelector(`.timer-value-secs`).textContent = addLeadingZero(initialTime.seconds);
   document.querySelector(`.timer-line`).setAttributeNS(null, `stroke-dashoffset`, `0`);
   document.querySelector(`.timer-value`).classList.remove(`timer-value--finished`);
-  const countDown = () => window.initializeCountdown(data.gameTime / 1000);
-  state.countDown = countDown();
+  window.initializeCountdown(data.gameTime / 1000);
   state.rightAnswerCount = 0;
   state.answerCount = data.gamesNumber;
   state.livesLeft = data.lives;
@@ -103,6 +102,11 @@ export const renderInitialState = (state, data) => {
 
 export const getPassedTime = (data) => {
   return Math.round((new Date().getTime() - data) / 1000);
+};
+
+export const getResult = (state) => {
+  state.result.answers = state.rightAnswerCount;
+  state.result.time = getPassedTime(state.startTime);
 };
 
 export const getStatistic = (data) => {
@@ -131,15 +135,15 @@ export const getStatistic = (data) => {
   return newData;
 };
 
-export const calculateStatistic = (currentData, statisticData) => {
+export const calculateStatistic = (state, statisticData) => {
   let currentStatistic = statisticData.slice(0);
-  currentStatistic.push(currentData.result);
+  currentStatistic.push(state.result);
   currentStatistic = getStatistic(currentStatistic);
-  const currentPlace = currentStatistic.indexOf(currentData.result) + 1;
+  const currentPlace = currentStatistic.indexOf(state.result) + 1;
   const playersNumber = currentStatistic.length;
   const betterThen = playersNumber - currentPlace;
-  currentData.statistic = Math.round(betterThen / playersNumber * 100);
+  state.statistic = Math.round(betterThen / playersNumber * 100);
   if (currentPlace === 1) {
-    currentData.status = `record`;
+    state.status = `record`;
   }
 };

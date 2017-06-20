@@ -1,12 +1,11 @@
 import GameView from './game-view';
 import render from '../functions/render';
-import {renderInitialState} from '../functions/get';
-import gameRules from '../gameRules';
-import currentState from '../currentState';
+import GamePresenter from '../GamePresenter.js';
 
 export default class Game {
   constructor() {
     this.view = new GameView();
+    this.presenter = new GamePresenter();
   }
   render() {
     const main = document.querySelector(`.app .main`);
@@ -14,7 +13,8 @@ export default class Game {
   }
   init() {
     this.view.startTimer = () => {
-      renderInitialState(currentState, gameRules);
+      this.presenter.initializeGame();
+      this.presenter.startTimer();
     };
     this.render();
     this.view.startTimer();
