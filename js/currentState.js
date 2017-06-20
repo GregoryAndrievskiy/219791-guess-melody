@@ -10,5 +10,6 @@ export default {
     time: 0,
     answers: 0
   },
-  status: ``
+  status: ``,
+  score: 2
 };

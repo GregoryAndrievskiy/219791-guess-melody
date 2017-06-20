@@ -1,23 +1,30 @@
 import AbstractView from '../AbstractView';
 import gameRules from '../gameRules';
-import currentState from '../currentState';
 import statistic from '../statistic';
 import {calculateStatistic} from '../functions/get';
 
 export default class ResultView extends AbstractView {
+  constructor(state) {
+    super();
+    this.state = state;
+  }
   get template() {
     let resultTitle;
     let resultStat;
-    let comparison = `Это&nbsp;лучше чем у&nbsp;${currentState.statistic}% &nbsp;игроков`;
-    if (currentState.status === `lose` || currentState.rightAnswerCount === 0) {
+    let comparison = `Это&nbsp;лучше чем у&nbsp;${this.state.statistic}% &nbsp;игроков`;
+    if (this.state.status === `lose` || this.state.rightAnswerCount === 0) {
       resultTitle = gameRules.loseTitle;
       resultStat = gameRules.loseStat;
       comparison = ``;
     } else {
-      calculateStatistic(currentState, statistic);
+      calculateStatistic(this.state, statistic);
       resultTitle = gameRules.winTitle;
-      resultStat = currentState.rightAnswerCount;
-      comparison = `Это&nbsp;лучше чем у&nbsp;${currentState.statistic}%&nbsp;игроков`;
+      resultStat = this.state.rightAnswerCount;
+      if (this.state.status === `record`) {
+        comparison = `Это рекорд!`;
+      } else {
+        comparison = `Это&nbsp;лучше чем у&nbsp;${this.state.statistic}%&nbsp;игроков`;
+      }
     }
     return `
       <section class="main main--result">

@@ -1,28 +1,14 @@
 import ArtistView from './artist-view';
-import render from '../functions/render';
-import nextScreen from '../functions/nextScreen';
-import gameRules from '../gameRules';
-import currentState from '../currentState';
+import GamePresenter from '../GamePresenter.js';
 
-const artist = () => {
+export default () => {
+  const presenter = new GamePresenter();
   const artistView = new ArtistView();
-  let score = 2;
-  const timer = setTimeout(function () {
-    score = score / 2;
-  }, gameRules.doubleScoreTime);
-  const mainWrap = document.querySelector(`.main-wrap`);
-  render(mainWrap, artistView.element);
-  const playerWrapper = document.querySelector(`.player-wrapper`);
-  window.initializePlayer(playerWrapper, currentState.rightAnswer.url[currentState.rightAnswer.rightAnswer]);
+  const timer = presenter.doubleScoreTimer();
+  presenter.renderArtist(artistView);
   artistView.getAnswer = (evt) => {
-    if (evt.target.value === `val-${currentState.rightAnswer.rightAnswer}`) {
-      currentState.rightAnswerCount = currentState.rightAnswerCount + score;
-    } else {
-      currentState.livesLeft--;
-    }
+    presenter.checkRadio(evt);
     clearTimeout(timer);
-    nextScreen();
+    presenter.nextScreen();
   };
 };
-
-export default artist;
