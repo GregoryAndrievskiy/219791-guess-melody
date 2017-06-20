@@ -1,7 +1,6 @@
 import Welcome from './screens/welcome';
 import Game from './screens/game';
 import Result from './screens/result';
-import currentState from './currentState';
 
 export default class Application {
   static showWelcome() {
@@ -10,7 +9,7 @@ export default class Application {
   static showGame() {
     new Game().init();
   }
-  static showStats() {
-    new Result(currentState).init();
+  static showStats(stats) {
+    new Result(stats).init();
   }
 }

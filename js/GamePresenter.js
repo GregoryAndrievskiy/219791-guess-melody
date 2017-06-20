@@ -18,7 +18,7 @@ export default class GamePresenter {
     const endgame = () => {
       this.state.status = `lose`;
       clearTimeout(this.state.timer);
-      Application.showStats();
+      Application.showStats(this.state);
     };
     const timeout = () => setTimeout(endgame, gameRules.gameTime);
     this.state.startTime = new Date().getTime();
@@ -28,7 +28,7 @@ export default class GamePresenter {
     this.state.answerCount--;
     if (this.state.answerCount < 0 || this.state.livesLeft === 0) {
       getResult(this.state);
-      Application.showStats();
+      Application.showStats(this.state);
       clearTimeout(this.state.timer);
     } else {
       randomQuestion(genre, artist);
