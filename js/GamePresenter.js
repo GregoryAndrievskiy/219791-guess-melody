@@ -28,7 +28,7 @@ export default class GamePresenter {
     this.state.answerCount--;
     if (this.state.answerCount < 0 || this.state.livesLeft === 0) {
       getResult(this.state);
-      Application.showStats(this.state);
+      Application.showStats();
       clearTimeout(this.state.timer);
     } else {
       randomQuestion(genre, artist);

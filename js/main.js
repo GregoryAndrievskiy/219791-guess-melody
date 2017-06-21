@@ -4,5 +4,4 @@ import './time-format.js';
 import './timer.js';
 import Application from './Application';
 
-Application.showWelcome();
-
+new Application().init();
