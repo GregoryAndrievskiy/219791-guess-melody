@@ -105,8 +105,16 @@ export const getPassedTime = (data) => {
 };
 
 export const getResult = (state) => {
-  state.result.answers = state.rightAnswerCount;
-  state.result.time = getPassedTime(state.startTime);
+  if (state.rightAnswerCount === 0) {
+    state.status = `lose`;
+  }
+  let answerCount = 0;
+  if (state.rightAnswerCount < 10) {
+    answerCount = `0` + state.rightAnswerCount;
+  } else {
+    answerCount = state.rightAnswerCount;
+  }
+  state.result.hash = answerCount.toString() + getPassedTime(state.startTime);
 };
 
 export const getStatistic = (data) => {
@@ -145,5 +153,22 @@ export const calculateStatistic = (state, statisticData) => {
   state.statistic = Math.round(betterThen / playersNumber * 100);
   if (currentPlace === 1) {
     state.status = `record`;
+  } else {
+    state.status = ``;
+  }
+};
+
+export const checkHashData = (data, state) => {
+  if (data) {
+    const score = data.slice(0, 2).replace(/^[0\.]+/, ``);
+    if (score === ``) {
+      state.status = `lose`;
+    } else {
+      state.status = `newstatus`;
+    }
+    const time = data.slice(2);
+    state.rightAnswerCount = score;
+    state.result.answers = score;
+    state.result.time = time;
   }
 };

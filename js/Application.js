@@ -1,6 +1,7 @@
 import Welcome from './screens/welcome';
 import Game from './screens/game';
 import Result from './screens/result';
+import {checkHashData} from './functions/get';
 import currentState from './currentState';
 
 const ControllerID = {
@@ -13,6 +14,7 @@ const getControllerIDFromHash = (hash) => hash.replace(`#`, ``).split(`=`);
 
 export default class Application {
   constructor() {
+    this.state = currentState;
     this.routes = {
       [ControllerID.WELCOME]: Welcome,
       [ControllerID.GAME]: Game,
@@ -20,20 +22,14 @@ export default class Application {
     };
     window.onhashchange = () => {
       const hash = getControllerIDFromHash(location.hash);
-      this.changeController(hash[0]);
       const data = hash[1];
-      if (data) {
-        let score = data.slice(0, 2);
-        let time = Math.round(data.slice(2) / 1000000);
-        currentState.rightAnswerCount = score;
-        currentState.result.answers = score;
-        currentState.result.time = time;
-      }
+      checkHashData(data, this.state);
+      this.changeController(hash[0]);
     };
   }
   changeController(route = ``) {
     const Controller = this.routes[route];
-    new Controller(currentState).init();
+    new Controller(this.state).init();
   }
   init() {
     this.changeController(getControllerIDFromHash(location.hash)[0]);
@@ -44,7 +40,7 @@ export default class Application {
   static showGame() {
     location.hash = ControllerID.GAME;
   }
-  static showStats() {
-    location.hash = ControllerID.STATS;
+  static showStats(state) {
+    location.hash = ControllerID.STATS + `=${state.result.hash}`;
   }
 }
