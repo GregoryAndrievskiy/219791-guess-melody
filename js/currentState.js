@@ -2,8 +2,9 @@ export default {
   answerCount: 10,
   livesLeft: 3,
   rightAnswerCount: 0,
+  statHash: 0,
   result: {
-    hash: 0,
+    date: 0,
     time: 0,
     answers: 0
   },

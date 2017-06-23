@@ -1,6 +1,6 @@
 import AbstractView from '../AbstractView';
 import gameRules from '../gameRules';
-import statistic from '../statistic';
+import gameData from '../gameData';
 import {calculateStatistic} from '../functions/get';
 
 export default class ResultView extends AbstractView {
@@ -17,7 +17,7 @@ export default class ResultView extends AbstractView {
       resultStat = gameRules.loseStat;
       comparison = ``;
     } else {
-      calculateStatistic(this.state, statistic);
+      calculateStatistic(this.state, gameData.stats);
       resultTitle = gameRules.winTitle;
       resultStat = this.state.result.answers;
       if (this.state.status === `record`) {

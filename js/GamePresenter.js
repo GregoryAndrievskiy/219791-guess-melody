@@ -86,4 +86,26 @@ export default class GamePresenter {
       this.state.livesLeft--;
     }
   }
+  sendStatistic() {
+    const requestSettings = {
+      body: JSON.stringify(this.state.result),
+      headers: {
+        'Content-Type': `application/json`
+      },
+      method: `POST`
+    };
+    return fetch(gameData.url, requestSettings)
+      .then(this.getStatistic);
+  }
+  getStatistic() {
+    const requestSettings = {
+      headers: {
+        'Content-Type': `application/json`
+      },
+      method: `GET`
+    };
+    return fetch(gameData.url, requestSettings)
+      .then((resp) => resp.json())
+      .then((data) => (gameData.stats = data));
+  }
 }

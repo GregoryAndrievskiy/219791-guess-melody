@@ -74,7 +74,7 @@ export const getResult = (state) => {
   } else {
     answerCount = state.rightAnswerCount;
   }
-  state.result.hash = answerCount.toString() + getPassedTime(state.startTime);
+  state.statHash = answerCount.toString() + getPassedTime(state.startTime);
 };
 
 export const getStatistic = (data) => {

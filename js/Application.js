@@ -50,6 +50,6 @@ export default class Application {
     location.hash = ControllerID.GAME;
   }
   static showStats(state) {
-    location.hash = ControllerID.STATS + `=${state.result.hash}`;
+    location.hash = ControllerID.STATS + `=${state.statHash}`;
   }
 }
