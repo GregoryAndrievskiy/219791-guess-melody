@@ -1,14 +1,16 @@
 import render from './functions/render';
 import Application from './Application';
-import {renderInitialState, getResult, randomQuestion, checkCBs, validateForm} from './functions/get';
+import {renderInitialState, getResult, chooseQuestion, checkCBs, validateForm} from './functions/get';
 import gameRules from './gameRules';
 import currentState from './currentState';
 import artist from './screens/artist';
 import genre from './screens/genre';
+import gameData from './gameData';
 
 export default class GamePresenter {
   constructor() {
     this.state = currentState;
+    this.data = gameData.loaded;
   }
   initializeGame() {
     renderInitialState(this.state, gameRules);
@@ -25,13 +27,22 @@ export default class GamePresenter {
     this.state.timer = timeout();
   }
   nextScreen() {
+    const gameNumber = 10 - this.state.answerCount;
     this.state.answerCount--;
     if (this.state.answerCount < 0 || this.state.livesLeft === 0) {
       getResult(this.state);
       Application.showStats(this.state);
       clearTimeout(this.state.timer);
     } else {
-      randomQuestion(genre, artist);
+      gameData.currentGame = chooseQuestion(gameNumber, this.data);
+      switch (gameData.currentGame.type) {
+        case `genre`:
+          genre();
+          break;
+        case `artist`:
+          artist();
+          break;
+      }
     }
   }
   doubleScoreTimer() {
@@ -44,18 +55,18 @@ export default class GamePresenter {
     const mainWrap = document.querySelector(`.main-wrap`);
     render(mainWrap, view.element);
     const playerWrapper = document.querySelector(`.player-wrapper`);
-    window.initializePlayer(playerWrapper, this.state.rightAnswer.url[this.state.rightAnswer.rightAnswer]);
+    window.initializePlayer(playerWrapper, gameData.currentGame.src);
   }
   renderGenre(view) {
     const mainWrap = document.querySelector(`.main-wrap`);
     render(mainWrap, view.element);
     const playerWrapper = document.querySelectorAll(`.player-wrapper`);
     playerWrapper.forEach(function (element, index) {
-      window.initializePlayer(element, currentState.rightAnswer.url[index]);
+      window.initializePlayer(element, gameData.currentGame.answers[index].src);
     });
   }
   checkRadio(evt) {
-    if (evt.target.value === `val-${this.state.rightAnswer.rightAnswer}`) {
+    if (evt.target.value === `true`) {
       this.state.rightAnswerCount = this.state.rightAnswerCount + this.state.score;
     } else {
       this.state.livesLeft--;
@@ -69,7 +80,7 @@ export default class GamePresenter {
   }
   checkBox() {
     const chkBoxes = Array.from(document.getElementsByName(`answer`));
-    if (checkCBs(chkBoxes, this.state.rightAnswer)) {
+    if (checkCBs(chkBoxes, gameData.currentGame)) {
       this.state.rightAnswerCount = this.state.rightAnswerCount + this.state.score;
     } else {
       this.state.livesLeft--;
