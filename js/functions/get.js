@@ -1,39 +1,3 @@
-export const randOrd = () => {
-  return (Math.round(Math.random()) - 0.5);
-};
-
-export const rnd = (min, max) => {
-  let rand = min + Math.random() * (max + 1 - min);
-  rand = Math.floor(rand);
-  return rand;
-};
-
-export const dataTrans = (data, gameType) => {
-  let mixUrl = [];
-  let mixArtist = [];
-  let mixGenre = [];
-  const indexBank = [];
-  let rand = rnd(0, gameType - 1);
-  for (let i = 0; i < data.artist.length; i++) {
-    indexBank.push(i);
-  }
-
-  const gameBank = indexBank.sort(randOrd).splice(0, gameType);
-
-  gameBank.forEach((i) => {
-    mixArtist.push(data.artist[i]);
-    mixGenre.push(data.genre[i]);
-    mixUrl.push(data.url[i]);
-  });
-
-  return {
-    artist: mixArtist,
-    url: mixUrl,
-    genre: mixGenre,
-    rightAnswer: rand
-  };
-};
-
 export const getCheckedValue = (checkboxes) => {
   const values = [];
   checkboxes.forEach((item) => {
@@ -47,7 +11,7 @@ export const getCheckedValue = (checkboxes) => {
 export const getRightValue = (checkboxes, data) => {
   const values = [];
   checkboxes.forEach((item) => {
-    if (data.genre[item.value] === data.genre[data.rightAnswer]) {
+    if (item.value === data.genre) {
       values.push(item.value);
     }
   });
@@ -57,8 +21,8 @@ export const getRightValue = (checkboxes, data) => {
 export const checkCBs = (checkboxes, data) => {
   const checkForAllRightAnswers = getRightValue(checkboxes, data).length === getCheckedValue(checkboxes).length;
   const checkedValues = getCheckedValue(checkboxes);
-  const rightAnswer = data.genre[data.rightAnswer];
-  return checkedValues.every((element) => data.genre[element] === rightAnswer) && checkForAllRightAnswers;
+  const rightAnswer = data.genre;
+  return checkedValues.every((element) => element === rightAnswer) && checkForAllRightAnswers;
 };
 
 export const validateForm = (inputs, submitButton, checkboxes) => {
@@ -77,12 +41,8 @@ export const validateForm = (inputs, submitButton, checkboxes) => {
   });
 };
 
-export const randomQuestion = (callbackOne, callbackTwo) => {
-  if (Math.random() >= 0.5) {
-    callbackOne();
-  } else {
-    callbackTwo();
-  }
+export const chooseQuestion = (number, data) => {
+  return data[number];
 };
 
 export const renderInitialState = (state, data) => {

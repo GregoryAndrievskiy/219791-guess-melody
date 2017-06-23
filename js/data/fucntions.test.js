@@ -3,19 +3,26 @@ import {checkCBs} from '../functions/get';
 
 const data = Object.freeze(
     {
-      genre: [`Хип-хоп и рэп`, `Классические`, `Кантри и фолк`, `Поп`, `Классические`, `Кантри и фолк`],
-      rightAnswer: `4`
+      "genre": `blues`,
     }
 );
 
 const checkboxes = Object.freeze([
   {
-    value: `1`,
+    value: `blues`,
     checked: true
   },
   {
-    value: `4`,
-    checked: true
+    value: `pop`,
+    checked: false
+  },
+  {
+    value: `rock`,
+    checked: false
+  },
+  {
+    value: `rnb`,
+    checked: false
   },
 ]);
 
@@ -27,13 +34,15 @@ describe(`Answers for genre`, () => {
 
   it(`false if one of answers is incorrect`, () => {
     const newCBs = checkboxes.slice();
-    newCBs[1].value = `3`;
+    newCBs[3].checked = true;
     assert.equal(false, checkCBs(newCBs, data));
   });
 
   it(`false if all correct answers was not selected`, () => {
     const cbs = checkboxes.slice();
-    cbs.checked = false;
+    cbs[0].checked = false;
+    cbs[2].checked = true;
+    cbs[2].value = `blues`;
     assert.equal(false, checkCBs(cbs, data));
   });
 });
