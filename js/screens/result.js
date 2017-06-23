@@ -15,7 +15,5 @@ export default class Result {
     this.view.newGame = () => {
       Application.showWelcome();
     };
-    const main = document.querySelector(`.app .main`);
-    render(main, this.view.element);
   }
 }

@@ -12,14 +12,14 @@ export default class ResultView extends AbstractView {
     let resultTitle;
     let resultStat;
     let comparison = `Это&nbsp;лучше чем у&nbsp;${this.state.statistic}% &nbsp;игроков`;
-    if (this.state.status === `lose` || this.state.rightAnswerCount === 0) {
+    if (this.state.status === `lose`) {
       resultTitle = gameRules.loseTitle;
       resultStat = gameRules.loseStat;
       comparison = ``;
     } else {
       calculateStatistic(this.state, statistic);
       resultTitle = gameRules.winTitle;
-      resultStat = this.state.rightAnswerCount;
+      resultStat = this.state.result.answers;
       if (this.state.status === `record`) {
         comparison = `Это рекорд!`;
       } else {
