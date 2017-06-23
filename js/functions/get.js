@@ -1,11 +1,11 @@
+export const randOrd = () => {
+  return (Math.round(Math.random()) - 0.5);
+};
+
 export const rnd = (min, max) => {
   let rand = min + Math.random() * (max + 1 - min);
   rand = Math.floor(rand);
   return rand;
-};
-
-export const randOrd = () => {
-  return (Math.round(Math.random()) - 0.5);
 };
 
 export const dataTrans = (data, gameType) => {
