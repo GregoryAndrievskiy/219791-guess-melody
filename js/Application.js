@@ -1,7 +1,6 @@
 import Welcome from './screens/welcome';
 import Game from './screens/game';
 import Result from './screens/result';
-import {checkHashData} from './functions/get';
 import currentState from './currentState';
 import gameData from './gameData';
 
@@ -13,7 +12,7 @@ const ControllerID = {
 
 const url = `https://intensive-ecmascript-server-btfgudlkpi.now.sh/guess-melody/questions`;
 
-const getControllerIDFromHash = (hash) => hash.replace(`#`, ``).split(`=`);
+const getControllerIDFromHash = (hash) => hash.replace(`#`, ``);
 
 export default class Application {
   constructor() {
@@ -26,9 +25,7 @@ export default class Application {
     this.load(gameData);
     window.onhashchange = () => {
       const hash = getControllerIDFromHash(location.hash);
-      const data = hash[1];
-      checkHashData(data, this.state);
-      this.changeController(hash[0]);
+      this.changeController(hash);
     };
   }
   load(storage) {
@@ -41,7 +38,7 @@ export default class Application {
     new Controller(this.state).init();
   }
   init() {
-    this.changeController(getControllerIDFromHash(location.hash)[0]);
+    this.changeController(getControllerIDFromHash(location.hash));
   }
   static showWelcome() {
     location.hash = ControllerID.WELCOME;
@@ -49,7 +46,7 @@ export default class Application {
   static showGame() {
     location.hash = ControllerID.GAME;
   }
-  static showStats(state) {
-    location.hash = ControllerID.STATS + `=${state.statHash}`;
+  static showStats() {
+    location.hash = ControllerID.STATS;
   }
 }
