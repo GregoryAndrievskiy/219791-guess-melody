@@ -15,12 +15,13 @@ export default class GamePresenter {
   initializeGame() {
     renderInitialState(this.state, gameRules);
     this.nextScreen();
+    this.getStatistic();
   }
   startTimer() {
     const endgame = () => {
       this.state.status = `lose`;
       clearTimeout(this.state.timer);
-      Application.showStats(this.state);
+      Application.showStats();
     };
     const timeout = () => setTimeout(endgame, gameRules.gameTime);
     this.state.startTime = new Date().getTime();
@@ -31,7 +32,8 @@ export default class GamePresenter {
     this.state.answerCount--;
     if (this.state.answerCount < 0 || this.state.livesLeft === 0) {
       getResult(this.state);
-      Application.showStats(this.state);
+      this.sendStatistic()
+        .then(Application.showStats());
       clearTimeout(this.state.timer);
     } else {
       gameData.currentGame = chooseQuestion(gameNumber, this.data);
@@ -85,5 +87,26 @@ export default class GamePresenter {
     } else {
       this.state.livesLeft--;
     }
+  }
+  sendStatistic() {
+    const requestSettings = {
+      body: JSON.stringify(this.state.result),
+      headers: {
+        'Content-Type': `application/json`
+      },
+      method: `POST`
+    };
+    return fetch(gameData.url, requestSettings);
+  }
+  getStatistic() {
+    const requestSettings = {
+      headers: {
+        'Content-Type': `application/json`
+      },
+      method: `GET`
+    };
+    return fetch(gameData.url, requestSettings)
+      .then((resp) => resp.json())
+      .then((data) => (gameData.stats = data));
   }
 }

@@ -67,14 +67,11 @@ export const getPassedTime = (data) => {
 export const getResult = (state) => {
   if (state.rightAnswerCount === 0) {
     state.status = `lose`;
-  }
-  let answerCount = 0;
-  if (state.rightAnswerCount < 10) {
-    answerCount = `0` + state.rightAnswerCount;
   } else {
-    answerCount = state.rightAnswerCount;
+    state.result.date = new Date().getTime();
+    state.result.answers = state.rightAnswerCount;
+    state.result.time = getPassedTime(state.startTime);
   }
-  state.result.hash = answerCount.toString() + getPassedTime(state.startTime);
 };
 
 export const getStatistic = (data) => {
@@ -104,9 +101,8 @@ export const getStatistic = (data) => {
 };
 
 export const calculateStatistic = (state, statisticData) => {
-  let currentStatistic = statisticData.slice(0);
-  currentStatistic.push(state.result);
-  currentStatistic = getStatistic(currentStatistic);
+  statisticData.push(state.result);
+  let currentStatistic = getStatistic(statisticData);
   const currentPlace = currentStatistic.indexOf(state.result) + 1;
   const playersNumber = currentStatistic.length;
   const betterThen = playersNumber - currentPlace;
@@ -115,20 +111,5 @@ export const calculateStatistic = (state, statisticData) => {
     state.status = `record`;
   } else {
     state.status = ``;
-  }
-};
-
-export const checkHashData = (data, state) => {
-  if (data) {
-    const score = data.slice(0, 2).replace(/^[0\.]+/, ``);
-    if (score === ``) {
-      state.status = `lose`;
-    } else {
-      state.status = `newstatus`;
-    }
-    const time = data.slice(2);
-    state.rightAnswerCount = score;
-    state.result.answers = score;
-    state.result.time = time;
   }
 };
