@@ -6,12 +6,12 @@ export default class Welcome {
   constructor() {
     this.view = new WelcomeView();
   }
-  render() {
+  _render() {
     const main = document.querySelector(`.app .main`);
     render(main, this.view.element);
   }
   init() {
-    this.render();
+    this._render();
     this.view.startGame = () => {
       Application.showGame();
     };

@@ -6,12 +6,12 @@ export default class Result {
   constructor(state) {
     this.view = new ResultView(state);
   }
-  render() {
+  _render() {
     const main = document.querySelector(`.app .main`);
     render(main, this.view.element);
   }
   init() {
-    this.render();
+    this._render();
     this.view.newGame = () => {
       Application.showWelcome();
     };

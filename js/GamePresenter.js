@@ -15,7 +15,7 @@ export default class GamePresenter {
   initializeGame() {
     renderInitialState(this.state, gameRules);
     this.nextScreen();
-    this.getStatistic();
+    this._getStatistic();
   }
   startTimer() {
     const endgame = () => {
@@ -32,7 +32,7 @@ export default class GamePresenter {
     this.state.answerCount--;
     if (this.state.answerCount < 0 || this.state.livesLeft === 0) {
       getResult(this.state);
-      this.sendStatistic()
+      this._sendStatistic()
         .then(Application.showStats());
       clearTimeout(this.state.timer);
     } else {
@@ -88,7 +88,7 @@ export default class GamePresenter {
       this.state.livesLeft--;
     }
   }
-  sendStatistic() {
+  _sendStatistic() {
     const requestSettings = {
       body: JSON.stringify(this.state.result),
       headers: {
@@ -98,7 +98,7 @@ export default class GamePresenter {
     };
     return fetch(gameData.url, requestSettings);
   }
-  getStatistic() {
+  _getStatistic() {
     const requestSettings = {
       headers: {
         'Content-Type': `application/json`

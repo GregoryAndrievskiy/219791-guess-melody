@@ -7,7 +7,7 @@ export default class Game {
     this.view = new GameView();
     this.presenter = new GamePresenter();
   }
-  render() {
+  _render() {
     const main = document.querySelector(`.app .main`);
     render(main, this.view.element);
   }
@@ -16,7 +16,7 @@ export default class Game {
       this.presenter.initializeGame();
       this.presenter.startTimer();
     };
-    this.render();
+    this._render();
     this.view.startTimer();
   }
 }
