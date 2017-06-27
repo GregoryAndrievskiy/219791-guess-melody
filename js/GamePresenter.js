@@ -21,7 +21,7 @@ export default class GamePresenter {
     const endgame = () => {
       this._state.status = `lose`;
       clearTimeout(this._state.timer);
-      Application.showStats();
+      Application.showStats(this._state);
     };
     const timeout = () => setTimeout(endgame, gameRules.gameTime);
     this._state.startTime = new Date().getTime();

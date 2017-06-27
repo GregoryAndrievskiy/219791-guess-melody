@@ -6,24 +6,24 @@ import {calculateStatistic} from '../functions/get';
 export default class ResultView extends AbstractView {
   constructor(state) {
     super();
-    this.state = state;
+    this._state = state;
   }
   get template() {
     let resultTitle;
     let resultStat;
-    let comparison = `Это&nbsp;лучше чем у&nbsp;${this.state.statistic}% &nbsp;игроков`;
-    if (this.state.status === `lose`) {
+    let comparison = `Это&nbsp;лучше чем у&nbsp;${this._state.statistic}% &nbsp;игроков`;
+    if (this._state.status === `lose`) {
       resultTitle = gameRules.loseTitle;
       resultStat = gameRules.loseStat;
       comparison = ``;
     } else {
-      calculateStatistic(this.state, gameData.stats);
+      calculateStatistic(this._state, gameData.stats);
       resultTitle = gameRules.winTitle;
-      resultStat = this.state.result.answers;
-      if (this.state.status === `record`) {
+      resultStat = this._state.result.answers;
+      if (this._state.status === `record`) {
         comparison = `Это рекорд!`;
       } else {
-        comparison = `Это&nbsp;лучше чем у&nbsp;${this.state.statistic}%&nbsp;игроков`;
+        comparison = `Это&nbsp;лучше чем у&nbsp;${this._state.statistic}%&nbsp;игроков`;
       }
     }
     return `
