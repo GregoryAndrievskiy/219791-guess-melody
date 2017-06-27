@@ -1,5 +1,5 @@
 import assert from 'assert';
-import {checkCBs} from '../functions/get';
+import {checkCheckboxes} from '../functions/get';
 
 const data = Object.freeze(
     {
@@ -29,13 +29,13 @@ const checkboxes = Object.freeze([
 describe(`Answers for genre`, () => {
 
   it(`true if all checked answers are correct`, () => {
-    assert(checkCBs(checkboxes, data));
+    assert(checkCheckboxes(checkboxes, data));
   });
 
   it(`false if one of answers is incorrect`, () => {
     const newCBs = checkboxes.slice();
     newCBs[3].checked = true;
-    assert.equal(false, checkCBs(newCBs, data));
+    assert.equal(false, checkCheckboxes(newCBs, data));
   });
 
   it(`false if all correct answers was not selected`, () => {
@@ -43,6 +43,6 @@ describe(`Answers for genre`, () => {
     cbs[0].checked = false;
     cbs[2].checked = true;
     cbs[2].value = `blues`;
-    assert.equal(false, checkCBs(cbs, data));
+    assert.equal(false, checkCheckboxes(cbs, data));
   });
 });

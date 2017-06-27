@@ -1,4 +1,5 @@
 import gameData from '../gameData';
+import currentState from '../currentState';
 import AbstractView from '../AbstractView';
 
 export default class GenreView extends AbstractView {
@@ -7,8 +8,10 @@ export default class GenreView extends AbstractView {
   }
   bind() {
     const send = this.element.querySelector(`.genre-answer-send`);
+    currentState.eventElement = send;
     send.onclick = (evt) => {
       this.getAnswer(evt);
+      send.onclick = null;
     };
   }
   genreQuestion() {

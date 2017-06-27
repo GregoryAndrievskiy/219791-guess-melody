@@ -2,6 +2,7 @@ import Welcome from './screens/welcome';
 import Game from './screens/game';
 import Result from './screens/result';
 import currentState from './currentState';
+import {checkHashData} from './functions/get';
 import gameData from './gameData';
 
 const ControllerID = {
@@ -10,35 +11,41 @@ const ControllerID = {
   STATS: `stats`
 };
 
-const url = `https://intensive-ecmascript-server-btfgudlkpi.now.sh/guess-melody/questions`;
-
-const getControllerIDFromHash = (hash) => hash.replace(`#`, ``);
+const getControllerIDFromHash = (hash) => hash.replace(`#`, ``).split(`=`);
 
 export default class Application {
   constructor() {
-    this.state = currentState;
-    this.routes = {
+    this._state = currentState;
+    this._routes = {
       [ControllerID.WELCOME]: Welcome,
       [ControllerID.GAME]: Game,
       [ControllerID.STATS]: Result
     };
-    this.load(gameData);
+    this._downloadStatistic();
     window.onhashchange = () => {
       const hash = getControllerIDFromHash(location.hash);
-      this.changeController(hash);
+      const data = hash[1];
+      checkHashData(data, this._state);
+      this._changeController(hash[0]);
     };
   }
-  load(storage) {
-    return fetch(url)
-      .then((resp) => resp.json())
-      .then((data) => (storage.loaded = data));
-  }
-  changeController(route = ``) {
-    const Controller = this.routes[route];
-    new Controller(this.state).init();
-  }
   init() {
-    this.changeController(getControllerIDFromHash(location.hash));
+    this._changeController(getControllerIDFromHash(location.hash));
+  }
+  _downloadStatistic() {
+    const requestSettings = {
+      headers: {
+        'Content-Type': `application/json`
+      },
+      method: `GET`
+    };
+    return fetch(gameData.url, requestSettings)
+      .then((resp) => resp.json())
+      .then((data) => (gameData.stats = data));
+  }
+  _changeController(route = ``) {
+    const Controller = this._routes[route];
+    new Controller(this._state).init();
   }
   static showWelcome() {
     location.hash = ControllerID.WELCOME;
@@ -46,7 +53,7 @@ export default class Application {
   static showGame() {
     location.hash = ControllerID.GAME;
   }
-  static showStats() {
-    location.hash = ControllerID.STATS;
+  static showStats(state) {
+    location.hash = ControllerID.STATS + `=${state.statHash}`;
   }
 }

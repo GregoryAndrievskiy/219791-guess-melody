@@ -40,6 +40,7 @@ export default class ResultView extends AbstractView {
     const replay = this.element.querySelector(`.main-replay`);
     replay.onclick = () => {
       this.newGame();
+      replay.onclick = null;
     };
   }
   newGame() {

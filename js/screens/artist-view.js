@@ -1,4 +1,5 @@
 import gameData from '../gameData';
+import currentState from '../currentState';
 import AbstractView from '../AbstractView';
 
 export default class ArtistView extends AbstractView {
@@ -24,9 +25,11 @@ export default class ArtistView extends AbstractView {
   }
   bind() {
     const answer = this.element.querySelectorAll(`.main-answer-r`);
+    currentState.eventElement = answer;
     answer.forEach((item) => {
       item.onclick = (evt) => {
         this.getAnswer(evt);
+        item.onclick = null;
       };
     });
   }

@@ -1,3 +1,5 @@
+import {formatTime, initializeCountdown} from './displayTimer';
+
 export const getCheckedValue = (checkboxes) => {
   const values = [];
   checkboxes.forEach((item) => {
@@ -18,7 +20,7 @@ export const getRightValue = (checkboxes, data) => {
   return values;
 };
 
-export const checkCBs = (checkboxes, data) => {
+export const checkCheckboxes = (checkboxes, data) => {
   const checkForAllRightAnswers = getRightValue(checkboxes, data).length === getCheckedValue(checkboxes).length;
   const checkedValues = getCheckedValue(checkboxes);
   const rightAnswer = data.genre;
@@ -41,19 +43,15 @@ export const validateForm = (inputs, submitButton, checkboxes) => {
   });
 };
 
-export const chooseQuestion = (number, data) => {
-  return data[number];
-};
-
 export const renderInitialState = (state, data) => {
   const addLeadingZero = (val) => val < 10 ? `0${val}` : val;
   const timer = document.querySelector(`.timer-value`);
-  const initialTime = window.formatTime(data.gameTime, 0);
+  const initialTime = formatTime(data.gameTime, 0);
   timer.querySelector(`.timer-value-mins`).textContent = addLeadingZero(initialTime.minutes);
   timer.querySelector(`.timer-value-secs`).textContent = addLeadingZero(initialTime.seconds);
   document.querySelector(`.timer-line`).setAttributeNS(null, `stroke-dashoffset`, `0`);
   document.querySelector(`.timer-value`).classList.remove(`timer-value--finished`);
-  window.initializeCountdown(data.gameTime / 1000);
+  initializeCountdown(data.gameTime / 1000);
   state.rightAnswerCount = 0;
   state.answerCount = data.gamesNumber;
   state.livesLeft = data.lives;
@@ -68,18 +66,18 @@ export const getResult = (state) => {
   if (state.rightAnswerCount === 0) {
     state.status = `lose`;
   } else {
+    if (state.rightAnswerCount < 10) {
+      state.rightAnswerCount = `0` + state.rightAnswerCount;
+    }
     state.result.date = new Date().getTime();
-    state.result.answers = state.rightAnswerCount;
-    state.result.time = getPassedTime(state.startTime);
+    state.statHash = state.rightAnswerCount.toString() + getPassedTime(state.startTime);
   }
 };
 
 export const getStatistic = (data) => {
   const newData = data.slice(0);
   const getRank = (array) => {
-    let rank;
-    rank = array.answers;
-    return rank;
+    return array.answers;
   };
   const timeComparator = (left, right) => {
     if (left < right) {
@@ -102,7 +100,7 @@ export const getStatistic = (data) => {
 
 export const calculateStatistic = (state, statisticData) => {
   statisticData.push(state.result);
-  let currentStatistic = getStatistic(statisticData);
+  const currentStatistic = getStatistic(statisticData);
   const currentPlace = currentStatistic.indexOf(state.result) + 1;
   const playersNumber = currentStatistic.length;
   const betterThen = playersNumber - currentPlace;
@@ -110,6 +108,22 @@ export const calculateStatistic = (state, statisticData) => {
   if (currentPlace === 1) {
     state.status = `record`;
   } else {
-    state.status = ``;
+    state.status = `newstatus`;
+  }
+};
+
+export const checkHashData = (data, state) => {
+  if (data) {
+    let score = data.slice(0, 2).replace(/^[0\.]+/, ``);
+    if (score === ``) {
+      state.status = `lose`;
+      score = 0;
+    } else {
+      state.status = `newstatus`;
+    }
+    const time = +data.slice(2);
+    state.rightAnswerCount = score;
+    state.result.answers = score;
+    state.result.time = time;
   }
 };
