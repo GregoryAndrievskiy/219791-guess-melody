@@ -18,12 +18,11 @@ export const initializePlayer = (element, file, autoplay = false, controllable =
     if (controllable) {
       button.onclick = () => switchState(state, player, content);
     }
-
     if (autoplay) {
       switchState(state, player);
     }
   };
-  player.src = file;
+  player.src = file.src;
   element.appendChild(content);
   element.classList.toggle(`player--no-controls`, !controllable);
 };

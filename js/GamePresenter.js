@@ -36,7 +36,7 @@ export default class GamePresenter {
         .then(Application.showStats(this._state));
       clearTimeout(this._state.timer);
     } else {
-      gameData.currentGame = this._data[gameNumber];
+      gameData.currentGame = gameData.loaded[gameNumber];
       switch (gameData.currentGame.type) {
         case `genre`:
           genre();
@@ -98,12 +98,49 @@ export default class GamePresenter {
     };
     return fetch(gameData.url, requestSettings);
   }
+  _getAudioSrc(array) {
+    let loaded = 0;
+    let src = 0;
+    array.forEach((element) => {
+      if (element.type === `genre`) {
+        src = src + 4;
+      } else {
+        src++;
+      }
+      return src;
+    });
+    const loadedAudio = () => {
+      loaded++;
+      if (loaded === src) {
+        this._allowToPlay();
+      }
+    };
+    array.forEach((game) => {
+      switch (game.type) {
+        case `genre`:
+          game.answers.forEach((answer) => {
+            const audio = new Audio(answer.src);
+            const loadEvent = new Promise(() => audio.addEventListener(`canplaythrough`, loadedAudio));
+            loadEvent.then(() => audio.removeEventListener(`canplaythrough`, loadedAudio));
+            answer.src = audio;
+          });
+          break;
+        case `artist`:
+          const audio = new Audio(game.src);
+          const loadEvent = new Promise(() => audio.addEventListener(`canplaythrough`, loadedAudio));
+          loadEvent.then(() => audio.removeEventListener(`canplaythrough`, loadedAudio));
+          game.src = audio;
+          break;
+      }
+    });
+  }
+  _allowToPlay() {
+    document.querySelector(`.main-play`).removeAttribute(`style`);
+  }
   loadData() {
-    return fetch(gameData.data)
+    return fetch(gameData.dataURL)
       .then((resp) => resp.json())
       .then((data) => (gameData.loaded = data))
-      .then(() => {
-        document.querySelector(`.main-play`).removeAttribute(`style`);
-      });
+      .then(() => this._getAudioSrc(gameData.loaded));
   }
 }

@@ -4,8 +4,6 @@ class AbstractView {
   render() {
     return this.create(this.template);
   }
-  bind() {
-  }
   get element() {
     if (!this._element) {
       this._element = this.render();
@@ -15,6 +13,8 @@ class AbstractView {
   }
   create() {
     return new DOMParser().parseFromString(this.template, `text/html`).body.firstChild;
+  }
+  bind() {
   }
 }
 

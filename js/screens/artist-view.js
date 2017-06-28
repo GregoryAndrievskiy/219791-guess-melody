@@ -28,8 +28,11 @@ export default class ArtistView extends AbstractView {
     currentState.eventElement = answer;
     answer.forEach((item) => {
       item.onclick = (evt) => {
-        this.getAnswer(evt);
+        document.querySelectorAll(`button`).forEach((element) => {
+          element.onclick = null;
+        });
         item.onclick = null;
+        this.getAnswer(evt);
       };
     });
   }

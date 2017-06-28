@@ -10,8 +10,14 @@ export default class GenreView extends AbstractView {
     const send = this.element.querySelector(`.genre-answer-send`);
     currentState.eventElement = send;
     send.onclick = (evt) => {
-      this.getAnswer(evt);
       send.onclick = null;
+      document.querySelectorAll(`button`).forEach((element) => {
+        element.onclick = null;
+      });
+      document.getElementsByName(`answer`).forEach((item) => {
+        item.onclick = null;
+      });
+      this.getAnswer(evt);
     };
   }
   genreQuestion() {
