@@ -22,7 +22,7 @@ export const initializePlayer = (element, file, autoplay = false, controllable =
       switchState(state, player);
     }
   };
-  player.src = file.src;
+  player.src = file;
   element.appendChild(content);
   element.classList.toggle(`player--no-controls`, !controllable);
 };

@@ -122,14 +122,12 @@ export default class GamePresenter {
             const audio = new Audio(answer.src);
             const loadEvent = new Promise(() => audio.addEventListener(`canplaythrough`, loadedAudio));
             loadEvent.then(() => audio.removeEventListener(`canplaythrough`, loadedAudio));
-            answer.src = audio;
           });
           break;
         case `artist`:
           const audio = new Audio(game.src);
           const loadEvent = new Promise(() => audio.addEventListener(`canplaythrough`, loadedAudio));
           loadEvent.then(() => audio.removeEventListener(`canplaythrough`, loadedAudio));
-          game.src = audio;
           break;
       }
     });
