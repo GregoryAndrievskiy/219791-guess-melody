@@ -11,11 +11,19 @@ import gameData from './gameData';
 export default class GamePresenter {
   constructor() {
     this._state = currentState;
-    this._data = gameData.loaded;
   }
   initializeGame() {
     renderInitialState(this._state, gameRules);
-    this.nextScreen();
+    if (this._state.status === `loaded`) {
+      this.nextScreen();
+    } else {
+      return fetch(gameData.dataURL)
+        .then((resp) => resp.json())
+        .then((data) => (gameData.loaded = data))
+        .then(() => this.nextScreen())
+        .then(() => (this._state.status = `loaded`));
+    }
+    return this._state;
   }
   startTimer() {
     const endgame = () => {
@@ -88,6 +96,13 @@ export default class GamePresenter {
       this._state.livesLeft--;
     }
   }
+  loadData() {
+    return fetch(gameData.dataURL)
+      .then((resp) => resp.json())
+      .then((data) => (gameData.loaded = data))
+      .then(() => this._getAudioSrc(gameData.loaded, this._allowToPlay))
+      .then(() => (this._state.status = `loaded`));
+  }
   _sendStatistic() {
     const requestSettings = {
       body: JSON.stringify(this._state.result),
@@ -98,7 +113,7 @@ export default class GamePresenter {
     };
     return fetch(gameData.url, requestSettings);
   }
-  _getAudioSrc(array) {
+  _getAudioSrc(array, callback) {
     let loaded = 0;
     let src = 0;
     array.forEach((element) => {
@@ -112,7 +127,7 @@ export default class GamePresenter {
     const loadedAudio = () => {
       loaded++;
       if (loaded === src) {
-        this._allowToPlay();
+        callback();
       }
     };
     array.forEach((game) => {
@@ -120,25 +135,19 @@ export default class GamePresenter {
         case `genre`:
           game.answers.forEach((answer) => {
             const audio = new Audio(answer.src);
-            const loadEvent = new Promise(() => audio.addEventListener(`canplaythrough`, loadedAudio));
-            loadEvent.then(() => audio.removeEventListener(`canplaythrough`, loadedAudio));
+            const loadEvent = new Promise(() => audio.addEventListener(`loadeddata`, loadedAudio));
+            loadEvent.then(() => audio.removeEventListener(`loadeddata`, loadedAudio));
           });
           break;
         case `artist`:
           const audio = new Audio(game.src);
-          const loadEvent = new Promise(() => audio.addEventListener(`canplaythrough`, loadedAudio));
-          loadEvent.then(() => audio.removeEventListener(`canplaythrough`, loadedAudio));
+          const loadEvent = new Promise(() => audio.addEventListener(`loadeddata`, loadedAudio));
+          loadEvent.then(() => audio.removeEventListener(`loadeddata`, loadedAudio));
           break;
       }
     });
   }
   _allowToPlay() {
     document.querySelector(`.main-play`).removeAttribute(`style`);
-  }
-  loadData() {
-    return fetch(gameData.dataURL)
-      .then((resp) => resp.json())
-      .then((data) => (gameData.loaded = data))
-      .then(() => this._getAudioSrc(gameData.loaded));
   }
 }

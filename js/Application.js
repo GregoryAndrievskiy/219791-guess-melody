@@ -21,18 +21,26 @@ export default class Application {
       [ControllerID.GAME]: Game,
       [ControllerID.STATS]: Result
     };
-    this._downloadStatistic();
     window.onhashchange = () => {
       const hash = getControllerIDFromHash(location.hash);
       const data = hash[1];
       checkHashData(data, this._state);
-      this._changeController(hash[0]);
+      this._changeController(getControllerIDFromHash(hash[0]));
     };
   }
   init() {
-    this._changeController(getControllerIDFromHash(location.hash));
+    const analyze = () => {
+      const hash = getControllerIDFromHash(location.hash);
+      const data = hash[1];
+      checkHashData(data, this._state);
+      this._changeController(getControllerIDFromHash(hash[0]));
+    };
+    const hash = getControllerIDFromHash(location.hash);
+    const data = hash[1];
+    checkHashData(data, this._state);
+    this._downloadStatistic(analyze);
   }
-  _downloadStatistic() {
+  _downloadStatistic(callback) {
     const requestSettings = {
       headers: {
         'Content-Type': `application/json`
@@ -41,7 +49,8 @@ export default class Application {
     };
     return fetch(gameData.url, requestSettings)
       .then((resp) => resp.json())
-      .then((data) => (gameData.stats = data));
+      .then((data) => (gameData.stats = data))
+      .then(() => callback());
   }
   _changeController(route = ``) {
     const Controller = this._routes[route];
