@@ -124,25 +124,26 @@ export default class GamePresenter {
       }
       return src;
     });
-    const loadedAudio = () => {
-      loaded++;
-      if (loaded === src) {
-        callback();
-      }
+    const loadedAudio = (media) => {
+      return () => {
+        loaded++;
+        media.removeEventListener(`loadeddata`, loadedAudio);
+        if (loaded === src) {
+          callback();
+        }
+      };
     };
     array.forEach((game) => {
       switch (game.type) {
         case `genre`:
           game.answers.forEach((answer) => {
             const audio = new Audio(answer.src);
-            const loadEvent = new Promise(() => audio.addEventListener(`loadeddata`, loadedAudio));
-            loadEvent.then(() => audio.removeEventListener(`loadeddata`, loadedAudio));
+            audio.addEventListener(`loadeddata`, loadedAudio(audio));
           });
           break;
         case `artist`:
           const audio = new Audio(game.src);
-          const loadEvent = new Promise(() => audio.addEventListener(`loadeddata`, loadedAudio));
-          loadEvent.then(() => audio.removeEventListener(`loadeddata`, loadedAudio));
+          audio.addEventListener(`loadeddata`, loadedAudio(audio));
           break;
       }
     });
