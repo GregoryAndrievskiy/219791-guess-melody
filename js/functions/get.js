@@ -56,6 +56,7 @@ export const renderInitialState = (state, data) => {
   state.answerCount = data.gamesNumber;
   state.livesLeft = data.lives;
   state.status = ``;
+  state.statHash = 0;
 };
 
 export const getPassedTime = (data) => {
